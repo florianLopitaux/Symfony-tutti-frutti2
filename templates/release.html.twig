@@ -1,0 +1,16 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("css/release.css") }}">
+{% endblock %}
+
+<div class="release-box">
+    <a href="/favorite/add/{{ fruit }}/{{ release['id'] }}" class="favorite-link">&#11088</a>
+
+    <img src="{{ release['image_url'] }}"/>
+
+    <ul class="release-data-list">
+        <li class="release-data-item"><strong>Title:</strong> {{ release['title'] }}</li>
+        <li class="release-data-item"><strong>Year:</strong> {{ release['year'] }}</li>
+        <li class="release-data-item"><strong>Label:</strong> {{ release['label'] }}</li>
+        <li class="release-data-item"><strong>Genre:</strong> {{ release['category'] }}</li>
+    </ul>
+</div>

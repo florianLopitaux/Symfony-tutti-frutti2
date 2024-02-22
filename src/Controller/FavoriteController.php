@@ -7,31 +7,31 @@ use App\Repository\MusicRepository;
 use App\Service\DiscogsAccess;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use function Sodium\add;
 
 #[Route('/favorite')]
 class FavoriteController extends AbstractController
 {
-    #[Route('/', name: 'app_favorite')]
-    public function index(MusicRepository $database): Response
-    {
-        $musics = [];
-        foreach ($database->findAll() as $musicArray){
-            $music = new Music();
-
-            $music->setFruit($musicArray['fruit']);
-            $music->setYear($musicArray['year']);
-            $music->setLabel($musicArray['label']);
-            $music->setArtist($musicArray['artist']);
-            $music->setCategories($musicArray['categories']);
-            $music->setImageUrl($musicArray['image_url']);
-
-            $musics[] = $music;
-        }
-    }
+//    #[Route('/', name: 'app_favorite')]
+//    public function index(MusicRepository $database): Response
+//    {
+//        $musics = [];
+//        foreach ($database->findAll() as $musicArray){
+//            $music = new Music();
+//
+//            $music->setFruit($musicArray['fruit']);
+//            $music->setYear($musicArray['year']);
+//            $music->setLabel($musicArray['label']);
+//            $music->setArtist($musicArray['artist']);
+//            $music->setCategories($musicArray['categories']);
+//            $music->setImageUrl($musicArray['image_url']);
+//
+//            $musics[] = $music;
+//        }
+//
+//
+//    }
 
     #[Route('/add/{fruit}/{idRelease}', name: 'app_favorite_add')]
     public function add(EntityManagerInterface $entityManager, DiscogsAccess $api, string $idRelease, string $fruit): Response
@@ -49,5 +49,9 @@ class FavoriteController extends AbstractController
 
         $entityManager->persist($music);
         $entityManager->flush();
+
+        return $this->redirectToRoute('app_home_search',
+            ['fruit' => $fruit],
+            Response::HTTP_SEE_OTHER);
     }
 }
