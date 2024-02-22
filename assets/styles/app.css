@@ -140,7 +140,13 @@ input.search-element:focus {
 section#search-result-container {
     width: 80%;
     height: 70%;
+    overflow-y: scroll;
+    padding: 1em;
 
     background-color: #3b82f6;
     color: white;
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
