@@ -46,6 +46,7 @@ class FavoriteController extends AbstractController
         $music->setCategories($musicArray['category']);
         $music->setImageUrl($musicArray['image_url']);
         $music->setArtist($musicArray['artist']);
+        $music->addUser($this->getUser());
 
         $entityManager->persist($music);
         $entityManager->flush();

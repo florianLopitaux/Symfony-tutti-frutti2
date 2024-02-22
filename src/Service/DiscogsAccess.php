@@ -39,7 +39,7 @@ class DiscogsAccess {
         );
 
 
-        return $this->extractData($response->toArray());
+        return $this->extractFromSearch($response->toArray());
     }
 
 
@@ -58,10 +58,10 @@ class DiscogsAccess {
         );
 
 
-        return $response->toArray();
+        return $this->extractFromRelease($response->toArray());
     }
 
-    private function extractData(array $releases): array{
+    private function extractFromSearch(array $releases): array{
         $releases = $releases['results'];
         $releasesSort = array();
 
@@ -77,16 +77,33 @@ class DiscogsAccess {
                 $releaseSort['year'] = "unknown";
             }
 
-            if(array_key_exists('artists',$release)) {
-                $releaseSort['artist'] = $release['artists'][0]['name'];
-            }
-
             $releaseSort['label'] = $release['label'][0];
             $releaseSort['category'] = $release['genre'][0];
             $releaseSort['image_url'] = $release['cover_image'];
 
             $releasesSort[] = $releaseSort;
         }
+
         return $releasesSort;
+    }
+
+    private function extractFromRelease(array $release): array{
+        $releaseSort = array();
+
+        $releaseSort['id'] = $release['id'];
+        $releaseSort['title'] = $release['title'];
+
+        if(array_key_exists('year',$release)) {
+            $releaseSort['year'] = $release['year'];
+        } else {
+            $releaseSort['year'] = "unknown";
+        }
+
+        $releaseSort['artist'] = $release['artists'][0]['name'];
+        $releaseSort['label'] = $release['labels'][0]['name'];
+        $releaseSort['category'] = $release['genres'][0];
+        $releaseSort['image_url'] = $release['images'][0]['resource_url'];
+
+        return $releaseSort;
     }
 }
