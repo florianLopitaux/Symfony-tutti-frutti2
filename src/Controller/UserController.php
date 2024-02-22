@@ -23,8 +23,10 @@ class UserController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        // check if the user is logged to redirect it
         if ($error == null && strlen($lastUsername) !== 0) {
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_home');
+
         } else {
             return $this->render('login/login.html.twig', [
                 'last_username' => $lastUsername,
