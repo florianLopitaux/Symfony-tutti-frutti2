@@ -32,6 +32,7 @@ class FavoriteController extends AbstractController
 
         $music = new Music();
 
+        $music->setTitle($musicArray['title']);
         $music->setFruit($fruit);
         $music->setYear($musicArray['year']);
         $music->setLabel($musicArray['label']);
