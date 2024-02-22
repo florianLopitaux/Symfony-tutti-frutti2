@@ -17,7 +17,7 @@ class SearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fruit');
+            ->add('fruit', null, array('label' => false));
     }
     public function configureOptions(OptionsResolver $resolver): void
     {
