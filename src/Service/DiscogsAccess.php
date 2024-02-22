@@ -38,6 +38,8 @@ class DiscogsAccess {
         return $response->toArray();
     }
 
+    
+
     /**
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
