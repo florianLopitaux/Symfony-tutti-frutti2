@@ -42,11 +42,30 @@ class DiscogsAccess {
         return $this->extractData($response->toArray());
     }
 
-    private function extractData(array $data): array{
-        $data = $data['results'];
-        $dataSort = array();
-        
-        foreach ($data as $release) {
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    public function getRelease(string $id): array {
+
+        $response = $this->client->request(
+            'GET',
+            self::URL . "releases/" . $id . "?token=" . self::TOKEN
+        );
+
+
+        return $response->toArray();
+    }
+
+    private function extractData(array $releases): array{
+        $releases = $releases['results'];
+        $releasesSort = array();
+
+        foreach ($releases as $release) {
             $releaseSort = array();
 
             $releaseSort['id'] = $release['id'];
@@ -58,29 +77,16 @@ class DiscogsAccess {
                 $releaseSort['year'] = "unknown";
             }
 
+            if(array_key_exists('artists',$release)) {
+                $releaseSort['artist'] = $release['artists'][0]['name'];
+            }
+
             $releaseSort['label'] = $release['label'][0];
             $releaseSort['category'] = $release['genre'][0];
             $releaseSort['image_url'] = $release['cover_image'];
 
-            $dataSort[] = $releaseSort;
+            $releasesSort[] = $releaseSort;
         }
-        return $dataSort;
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
-     */
-    public function getRelease(int $id): array {
-
-        $response = $this->client->request(
-            'GET',
-            self::URL . "releases/" . $id . "?token=" . self::TOKEN
-        );
-
-        return $response->toArray();
+        return $releasesSort;
     }
 }

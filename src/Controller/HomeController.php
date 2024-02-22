@@ -8,11 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route('/home')]
 class HomeController extends AbstractController
@@ -35,8 +30,10 @@ class HomeController extends AbstractController
 
         $releases = $api->getSearchRelease($fruit);
 
+
         return $this->render('home/index.html.twig', [
-            'releases' => $releases
+            'releases' => $releases,
+            'fruit' => $fruit
         ]);
     }
 
@@ -44,8 +41,15 @@ class HomeController extends AbstractController
     private function extractFruitPost(Request $request): Response {
         $fruit = $request->request->get("fruit_search");
 
-        return $this->redirectToRoute('app_home_search',
-            ['fruit' => $fruit],
-            Response::HTTP_SEE_OTHER);
+        if($fruit == null) {
+            return $this->redirectToRoute('app_home',
+                [],
+                Response::HTTP_SEE_OTHER);
+        }
+        else {
+            return $this->redirectToRoute('app_home_search',
+                ['fruit' => $fruit],
+                Response::HTTP_SEE_OTHER);
+        }
     }
 }
