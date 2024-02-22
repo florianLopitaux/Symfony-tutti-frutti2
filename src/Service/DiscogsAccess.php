@@ -7,6 +7,7 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use function Sodium\add;
 
 class DiscogsAccess {
     // FIELDS
@@ -35,10 +36,26 @@ class DiscogsAccess {
             self::URL . "database/search?query=" . $query . "&type=release" . "&token=" . self::TOKEN
         );
 
-        return $response->toArray();
+
+        return $this->extractData($response->toArray());
     }
 
-    
+    private function extractData(array $data): array{
+        $data = $data["results"];
+        $dataSort = array();
+        foreach ($data as &$release) {
+            $releaseSort = array();
+
+            $releaseSort['id'] = $release["id"];
+            $releaseSort['year'] = $release["year"];
+            $releaseSort['label'] = $release["label"][0];
+            $releaseSort['category'] = $release["genre"][0];
+            $releaseSort['image_url'] = $release["cover_image"];
+
+            $dataSort[] = $releaseSort;
+        }
+        return $dataSort;
+    }
 
     /**
      * @throws TransportExceptionInterface
