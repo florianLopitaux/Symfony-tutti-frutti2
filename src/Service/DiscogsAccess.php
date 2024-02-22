@@ -14,6 +14,8 @@ class DiscogsAccess {
     private const TOKEN = "lvRWdaMImlBsYlbhXrHDDROvsWypZZOGwLwEoCcP";
     private const URL = "https://api.discogs.com/";
 
+    private const NB_RELEASE_PER_PAGE = 15;
+
 
     // CONSTRUCTOR
     function __construct(private HttpClientInterface $client) {
@@ -33,7 +35,7 @@ class DiscogsAccess {
 
         $response = $this->client->request(
             'GET',
-            self::URL . "database/search?query=" . $query . "&type=release" . "&token=" . self::TOKEN
+            self::URL . "database/search?query=" . $query . "&type=release&per_page=" . self::NB_RELEASE_PER_PAGE . "&page=1" . "&token=" . self::TOKEN
         );
 
 
@@ -43,10 +45,12 @@ class DiscogsAccess {
     private function extractData(array $data): array{
         $data = $data['results'];
         $dataSort = array();
+        
         foreach ($data as $release) {
             $releaseSort = array();
 
             $releaseSort['id'] = $release['id'];
+            $releaseSort['title'] = $release['title'];
 
             if(array_key_exists('year',$release)) {
                 $releaseSort['year'] = $release['year'];
