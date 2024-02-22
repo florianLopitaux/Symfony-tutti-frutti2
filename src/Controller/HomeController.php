@@ -16,31 +16,20 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class HomeController extends AbstractController
 {
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
-     */
-    #[Route('/home', name: 'app_home')]
-    public function index(Request $request, DiscogsAccess $api): Response
+    #[Route('/home', name: 'app_home', methods: ['GET'])]
+    public function index(Request $request, DiscogsAccess $api, string $fruit): Response
     {
-        $form = $this->createForm(SearchFormType::class);
+        return $this->render('home/index.html.twig', []);
+    }
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $content = $api->getSearchRelease($form->get('fruit')->getData());
-
-            return $this->render('home/index.html.twig', [
-                'releases' => $content,
-                'searchForm' => $form,
-            ]);
-        }
+    #[Route('/home/search', name: 'app_home_search', methods: ['GET', 'POST'])]
+    public function search(Request $request, DiscogsAccess $api): Response
+    {
+        $releases = $api->getSearchRelease(
+            $request->request->get("fruit_search"));
 
         return $this->render('home/index.html.twig', [
-            'searchForm' => $form,
+            'releases' => $releases
         ]);
     }
 }

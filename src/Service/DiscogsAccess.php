@@ -53,7 +53,7 @@ class DiscogsAccess {
             } else {
                 $releaseSort['year'] = "unknown";
             }
-            
+
             $releaseSort['label'] = $release['label'][0];
             $releaseSort['category'] = $release['genre'][0];
             $releaseSort['image_url'] = $release['cover_image'];
@@ -79,7 +79,4 @@ class DiscogsAccess {
 
         return $response->toArray();
     }
-
-
-    // PRIVATE STATIC METHODS
 }
