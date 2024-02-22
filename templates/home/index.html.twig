@@ -13,7 +13,7 @@
         <section id="search-result-container">
             {% if (releases is defined) %}
                 {% for current in releases %}
-                    {% include 'release.html.twig' with {'release': current} %}
+                    {% include 'release.html.twig' with {'release': current, 'fruit': fruit} %}
                 {% endfor %}
             {% endif %}
         </section>
