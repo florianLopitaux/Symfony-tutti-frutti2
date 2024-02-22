@@ -13,15 +13,16 @@
     </header>
 
     <main>
-        {{ form_errors(searchForm) }}
-        {{ form_start(searchForm) }}
-
-        {{ form_row(searchForm.fruit, {'attr': {"class": "search-element", "placeholder": "Search Fruit..."}}) }}
-
-        {{ form_end(searchForm) }}
+        <form method="POST">
+            <input name="fruit_search" class="search-element" placeholder="Search...">
+        </form>
 
         <section id="search-result-container">
-
+            {% if (releases is defined) %}
+                <p>
+                    {{ releases[0]['id'] }}
+                </p>
+            {% endif %}
         </section>
     </main>
 {% endblock %}
