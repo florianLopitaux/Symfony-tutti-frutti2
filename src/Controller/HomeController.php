@@ -31,11 +31,11 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $content = $api->getSearchRelease($form->get('fruit')->getData())['result'];
+            $content = $api->getSearchRelease($form->get('fruit')->getData());
 
             return $this->render('home/index.html.twig', [
                 'releases' => $content,
-                'controller_name' => 'HomeController',
+                'searchForm' => $form,
             ]);
         }
 
