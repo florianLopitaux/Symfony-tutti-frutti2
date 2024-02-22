@@ -41,16 +41,22 @@ class DiscogsAccess {
     }
 
     private function extractData(array $data): array{
-        $data = $data["results"];
+        $data = $data['results'];
         $dataSort = array();
-        foreach ($data as &$release) {
+        foreach ($data as $release) {
             $releaseSort = array();
 
-            $releaseSort['id'] = $release["id"];
-            $releaseSort['year'] = $release["year"];
-            $releaseSort['label'] = $release["label"][0];
-            $releaseSort['category'] = $release["genre"][0];
-            $releaseSort['image_url'] = $release["cover_image"];
+            $releaseSort['id'] = $release['id'];
+
+            if(array_key_exists('year',$release)) {
+                $releaseSort['year'] = $release['year'];
+            } else {
+                $releaseSort['year'] = "unknown";
+            }
+            
+            $releaseSort['label'] = $release['label'][0];
+            $releaseSort['category'] = $release['genre'][0];
+            $releaseSort['image_url'] = $release['cover_image'];
 
             $dataSort[] = $releaseSort;
         }
