@@ -36,6 +36,9 @@ class Music
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'musics')]
     private Collection $users;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $title = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -141,6 +144,18 @@ class Music
         if ($this->users->removeElement($user)) {
             $user->removeMusic($this);
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): static
+    {
+        $this->title = $title;
 
         return $this;
     }
