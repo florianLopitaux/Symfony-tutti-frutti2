@@ -28,7 +28,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_search');
 
         } else {
-            return $this->render('login/login.html.twig', [
+            return $this->render('pages/login/login.html.twig', [
                 'last_username' => $lastUsername,
                 'error' => $error,
             ]);
@@ -64,7 +64,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_search');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('pages/registration/register.html.twig', [
             'registrationForm' => $form,
         ]);
     }

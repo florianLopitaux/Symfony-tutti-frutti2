@@ -18,7 +18,7 @@ class SearchController extends AbstractController
             return $this->extractFruitPost($request);
         }
 
-        return $this->render('search/index.html.twig', []);
+        return $this->render('pages/search/index.html.twig', []);
     }
 
     #[Route('/{fruit}', name: 'app_search_fruit', methods: ['GET', 'POST'])]
@@ -30,7 +30,7 @@ class SearchController extends AbstractController
         $releases = $api->getSearchRelease($fruit);
 
 
-        return $this->render('search/index.html.twig', [
+        return $this->render('pages/search/index.html.twig', [
             'releases' => $releases,
             'fruit' => $fruit
         ]);

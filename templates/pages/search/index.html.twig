@@ -2,8 +2,12 @@
 
 {% block title %}Tutti Frutti - Search{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("css/pages/search_page_style.css") }}">
+{% endblock %}
+
 {% block body %}
-    {% include 'header.html.twig' %}
+    {% include 'components/header.html.twig' %}
 
     <main>
         <form method="POST">
@@ -13,7 +17,7 @@
         <section id="search-result-container">
             {% if (releases is defined) %}
                 {% for current in releases %}
-                    {% include 'release.html.twig' with {'release': current, 'fruit': fruit} %}
+                    {% include 'components/release.html.twig' with {'release': current, 'fruit': fruit} %}
                 {% endfor %}
             {% endif %}
         </section>

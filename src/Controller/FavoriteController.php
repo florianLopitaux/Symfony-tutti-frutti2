@@ -19,7 +19,7 @@ class FavoriteController extends AbstractController
         $user = $database->find($this->getUser()->getUserIdentifier());
         $musics = $user->getMusics();
 
-        return $this->render('favorite/favorite.html.twig', [
+        return $this->render('pages/favorite/favorite.html.twig', [
             'musics' => $musics,
             'user' => $user
         ]);
