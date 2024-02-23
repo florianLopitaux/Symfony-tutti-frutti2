@@ -44,7 +44,7 @@ class FavoriteController extends AbstractController
         $entityManager->persist($music);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_home_search',
+        return $this->redirectToRoute('app_search_fruit',
             ['fruit' => $fruit],
             Response::HTTP_SEE_OTHER);
     }

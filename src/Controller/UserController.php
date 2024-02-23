@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\MusicRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,7 +25,7 @@ class UserController extends AbstractController
 
         // check if the user is logged to redirect it
         if ($error == null && strlen($lastUsername) !== 0) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_search');
 
         } else {
             return $this->render('login/login.html.twig', [
@@ -62,7 +61,7 @@ class UserController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_search');
         }
 
         return $this->render('registration/register.html.twig', [
