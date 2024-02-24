@@ -16,7 +16,7 @@ class FavoriteController extends AbstractController
     #[Route('/', name: 'app_favorite')]
     public function index(UserRepository $database): Response
     {
-        $user = $database->find($this->getUser()->getUserIdentifier());
+        $user = $this->getUser();
         $musics = $user->getMusics();
 
         return $this->render('pages/favorite/favorite.html.twig', [
