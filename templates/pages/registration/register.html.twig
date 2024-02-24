@@ -3,11 +3,15 @@
 {% block title %}Tutti Frutti - Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <link rel="stylesheet" href="{{ asset("css/pages/login_page_style.css") }}">
+
+    <section id="dark-overlay"></section>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
+        <h1>Register</h1>
+
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
@@ -15,5 +19,7 @@
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>
+
+        <span>if you already have an account, go <a href="{{ path("app_login") }}">here</a></span>
     {{ form_end(registrationForm) }}
 {% endblock %}

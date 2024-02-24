@@ -3,6 +3,10 @@
 {% block title %}Tutti Frutti - Log in{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="{{ asset("css/pages/login_page_style.css") }}">
+
+    <section id="dark-overlay"></section>
+
     <form method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -38,5 +42,7 @@
         <button class="btn btn-lg btn-primary" type="submit">
             Sign in
         </button>
+
+        <span>if you don't have an account, go <a href="{{ path("app_register") }}">here</a></span>
     </form>
 {% endblock %}

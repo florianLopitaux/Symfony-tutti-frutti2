@@ -24,7 +24,7 @@ class UserController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         // check if the user is logged to redirect it
-        if ($error == null && strlen($lastUsername) !== 0) {
+        if ($this->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('app_search');
 
         } else {
@@ -64,8 +64,14 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_search');
         }
 
-        return $this->render('pages/registration/register.html.twig', [
-            'registrationForm' => $form,
-        ]);
+        // check if the user is logged to redirect it
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_search');
+
+        } else {
+            return $this->render('pages/registration/register.html.twig', [
+                'registrationForm' => $form,
+            ]);
+        }
     }
 }
