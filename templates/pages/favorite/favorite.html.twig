@@ -10,6 +10,22 @@
     {% include 'components/header.html.twig' with {'page': "favorite"} %}
 
     <main>
+        {% if musicsByFruit is empty %}
+            <h1>No musics saved in your favorite !</h1>
 
+        {% else %}
+            {% for fruit, musics in musicsByFruit %}
+                <section class="fruit-category-container">
+                    <label class="fruit-category">{{ fruit }}</label>
+
+
+                    <div class="musics-container">
+                        {% for currentMusic in musics %}
+                            {% include 'components/release.html.twig' with {'release': currentMusic, 'noStar': "1"} %}
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endfor %}
+        {% endif %}
     </main>
 {% endblock %}

@@ -159,4 +159,17 @@ class Music
 
         return $this;
     }
+
+    public function toArray(): array {
+        return [
+            'id' => $this->id,
+            'fruit' => $this->fruit,
+            'title' => $this->title,
+            'artist' => $this->artist,
+            'label' => $this->label,
+            'year' => $this->year,
+            'category' => $this->categories,
+            'image_url' => $this->image_url
+        ];
+    }
 }

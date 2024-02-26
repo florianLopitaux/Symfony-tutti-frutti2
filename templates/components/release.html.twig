@@ -3,7 +3,11 @@
 {% endblock %}
 
 <div class="release-box">
-    <a href="/favorite/add/{{ fruit }}/{{ release['id'] }}" class="favorite-link">&#11088</a>
+    {% if noStar is not defined %}
+        <a href="/favorite/add/{{ fruit }}/{{ release['id'] }}" class="favorite-link">&#11088</a>
+    {% else %}
+        <a href="/favorite/delete/{{ release['id'] }}" class="favorite-link">&#128465;&#65039;</a>
+    {% endif %}
 
     <img src="{{ release['image_url'] }}"/>
 

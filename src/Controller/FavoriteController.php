@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Music;
+use App\Repository\MusicRepository;
 use App\Repository\UserRepository;
 use App\Service\DiscogsAccess;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,10 +18,14 @@ class FavoriteController extends AbstractController
     public function index(UserRepository $database): Response
     {
         $user = $this->getUser();
-        $musics = $user->getMusics();
+        $musics = array();
+
+        foreach ($user->getMusics() as $music) {
+            $musics[$music->getFruit()][] = $music->toArray();
+        }
 
         return $this->render('pages/favorite/favorite.html.twig', [
-            'musics' => $musics,
+            'musicsByFruit' => $musics,
             'user' => $user
         ]);
     }
@@ -47,5 +52,16 @@ class FavoriteController extends AbstractController
         return $this->redirectToRoute('app_search_fruit',
             ['fruit' => $fruit],
             Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/delete/{idRelease}', name: 'app_favorite_delete')]
+    public function delete(EntityManagerInterface $entityManager, MusicRepository $musicRepository, string $idRelease): Response {
+        $music = $musicRepository->find($idRelease);
+        $this->getUser()->removeMusic($music);
+
+        $entityManager->remove($music);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_favorite', [], Response::HTTP_SEE_OTHER);
     }
 }
