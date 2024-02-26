@@ -1,0 +1,16 @@
+body {
+    background-image: url("../../img/fruit_background.webp");
+    background-size: cover;
+}
+
+body section#dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, .5);
+}

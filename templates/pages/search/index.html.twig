@@ -5,7 +5,9 @@
 {% block body %}
     <link rel="stylesheet" href="{{ asset("css/pages/search_page_style.css") }}">
 
-    {% include 'components/header.html.twig' %}
+    <section id="dark-overlay"></section>
+
+    {% include 'components/header.html.twig' with {'page': "search"} %}
 
     <main>
         <form method="POST">
